@@ -2,7 +2,9 @@ package com.lottoland.rps.controller;
 
 
 import com.lottoland.rps.api.enums.Choice;
+import com.lottoland.rps.api.exceptions.GameNotFoundException;
 import com.lottoland.rps.api.model.Game;
+import com.lottoland.rps.api.service.impl.GameService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @Api(tags = "Game")
 @RestController
@@ -39,14 +43,14 @@ public class GameController {
     }
 
     @GetMapping("/")
-    public Game getAllGamesStatus() {
+    public List<Game> getAllGamesStatus() {
         return gameService.getAllGamesStatus();
     }
 
     @PutMapping("/{gameId}")
     public Game play(
             @PathVariable("gameId") Long id,
-            @RequestParam("choice") Choice playerOneChoice) throws GameOverException, GameNotFoundException {
+            @RequestParam("choice") Choice playerOneChoice) throws GameNotFoundException {
         Choice playerTwoChoice = Choice.getRandom();
         return gameService.play(id, playerOneChoice, playerTwoChoice);
     }
