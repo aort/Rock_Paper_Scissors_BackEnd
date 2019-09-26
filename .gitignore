@@ -27,7 +27,7 @@
 .mvn/
 mvnw
 mvnw.cmd
-rock-paper.scissor.iml
+Rock_Paper_scissor_lottoland.iml
 
 # Compiled class file
 *.class
