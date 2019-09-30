@@ -8,6 +8,7 @@ import com.lottoland.rps.api.enums.Result;
 import com.lottoland.rps.api.exceptions.GameNotFoundException;
 import com.lottoland.rps.api.model.Game;
 import com.lottoland.rps.api.model.Round;
+import com.lottoland.rps.api.model.Statistics;
 import com.lottoland.rps.api.service.impl.GameService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,8 +46,27 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public List<Game> getAllGamesStatus() {
-        return gameDAO.findAll();
+    public Statistics getAllGamesStatus() {
+        List<Game> totalListOfGames = gameDAO.findAll();
+
+        Integer totalRounds = totalListOfGames.stream()
+                .map(x -> x.getRounds().size())
+                .reduce(0, Integer::sum);
+
+        Integer totalWinOne = totalListOfGames.stream()
+                .map(x -> x.getPlayerOneScore())
+                .reduce(0, Integer::sum);
+
+        Integer totalWinTwo = totalListOfGames.stream()
+                .map(x -> x.getPlayerTwoScore())
+                .reduce(0, Integer::sum);
+
+        return Statistics.builder()
+                .totalDraws(totalRounds - totalWinOne - totalWinTwo)
+                .totalRoundsPlayed(Long.valueOf(totalRounds))
+                .totalWinsFirstPlayer(totalWinOne)
+                .totalWinsSecondPlayer(totalWinTwo)
+                .build();
     }
 
     @Override
@@ -64,6 +84,7 @@ public class GameServiceImpl implements GameService {
             game.setRounds(rounds);
         }
         game.getRounds().add(round);
+        game.setNumberOfRounds(game.getRounds().size());
     }
 
     private Round createRound(Choice playerOneChoice, Choice playerTwoChoice, Game game) {

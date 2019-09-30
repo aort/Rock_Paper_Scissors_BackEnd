@@ -27,6 +27,8 @@ public class Game {
 
     private Integer playerTwoScore;
 
+    private Integer numberOfRounds;
+
     @OneToMany
     private List<Round> rounds;
 
@@ -35,6 +37,7 @@ public class Game {
         this.playerTwoName = playerTwoName;
         this.playerOneScore = 0;
         this.playerTwoScore = 0;
+        this.numberOfRounds = 0;
         this.rounds = new ArrayList<>();
     }
 }
