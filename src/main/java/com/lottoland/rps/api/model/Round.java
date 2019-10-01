@@ -3,10 +3,12 @@ package com.lottoland.rps.api.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.lottoland.rps.api.enums.Choice;
 import com.lottoland.rps.api.enums.Result;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -24,19 +26,14 @@ public class Round {
 
     private Result playerOneResult;
 
-    @ManyToOne
-    @JoinColumn
-    @JsonIgnore
-    private Game game;
-
+    @Builder
     public Round(
             Choice playerOneChoice,
             Choice playerTwoChoice,
-            Result result,
-            Game game) {
+            Result result) {
         this.playerOneChoice = playerOneChoice;
         this.playerTwoChoice = playerTwoChoice;
         this.playerOneResult = result;
-        this.game = game;
     }
+
 }

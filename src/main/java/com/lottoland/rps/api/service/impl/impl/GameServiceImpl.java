@@ -89,7 +89,7 @@ public class GameServiceImpl implements GameService {
 
     private Round createRound(Choice playerOneChoice, Choice playerTwoChoice, Game game) {
         Result result = evaluateChoices(playerOneChoice, playerTwoChoice);
-        Round round = new Round(playerOneChoice, playerTwoChoice, result, game);
+        Round round = new Round(playerOneChoice, playerTwoChoice, result);
         return roundDAO.save(round);
     }
 

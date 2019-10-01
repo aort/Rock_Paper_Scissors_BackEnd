@@ -1,5 +1,6 @@
 package com.lottoland.rps.api.model;
 
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -39,5 +40,16 @@ public class Game {
         this.playerTwoScore = 0;
         this.numberOfRounds = 0;
         this.rounds = new ArrayList<>();
+    }
+
+    @Builder
+    public Game(Long id, String playerOneName, String playerTwoName, Integer playerOneScore, Integer playerTwoScore, Integer numberOfRounds, List<Round> rounds) {
+        this.id = id;
+        this.playerOneName = playerOneName;
+        this.playerTwoName = playerTwoName;
+        this.playerOneScore = playerOneScore;
+        this.playerTwoScore = playerTwoScore;
+        this.numberOfRounds = numberOfRounds;
+        this.rounds = rounds;
     }
 }
